@@ -1,0 +1,44 @@
+<!DOCTYPE>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:insert="links.html"></div>
+</head>
+<body>
+
+    <div th:insert="navbar.html"></div>
+
+    <div class="container mt-3">
+        <div class="row">
+              <div class="col-12">
+                  <table class="table table-striped">
+                      <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>MODEL</th>
+                                <th>PRICE</th>
+                                <th>ENGINE</th>
+                                <th>COLOR</th>
+                                <th>DESCRIPTION</th>
+                                <th style="width: 8%;">DETAILS</th>
+                            </tr>
+                      </thead>
+                      <tbody>
+                        <tr th:each="m: ${mashinu}">
+                            <td th:text="${m.id}"></td>
+                            <td th:text="${m.model}"></td>
+                            <td th:text="${m.price}"></td>
+                            <td th:text="${m.engine}"></td>
+                            <td th:text="${m.color}"></td>
+                            <td th:text="${m.description}"></td>
+                            <td> <a class="btn btn-primary btn-sm">DETAILS</a></td>
+                        </tr>
+                      </tbody>
+                  </table>
+              </div>
+        </div>
+    </div>
+
+</body>
+</html>
