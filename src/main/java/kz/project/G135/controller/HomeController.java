@@ -3,7 +3,6 @@ package kz.project.G135.controller;
 
 import kz.project.G135.db.DBManager;
 import kz.project.G135.model.Car;
-import lombok.Getter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
