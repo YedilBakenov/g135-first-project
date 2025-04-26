@@ -32,7 +32,7 @@
                             <td th:text="${m.engine}"></td>
                             <td th:text="${m.color}"></td>
                             <td th:text="${m.description}"></td>
-                            <td> <a class="btn btn-primary btn-sm">DETAILS</a></td>
+                            <td> <a th:href="@{'/details/' + ${m.id}}"  class="btn btn-primary btn-sm">DETAILS</a></td>
                         </tr>
                       </tbody>
                   </table>

@@ -12,7 +12,8 @@
 <div class="container mt-3">
     <div class="row justify-content-center">
         <div class="col-6">
-            <form action="/add-car" method="post">
+            <form action="/update-car" method="post">
+                <input type="hidden" name="id" th:value="${mashina.id}">
                 <div class="row mt-2">
                     <div class="col-12">
                         <label>MODEL:</label>
@@ -20,7 +21,7 @@
                 </div>
                 <div class="row mt-2">
                     <div class="col-12">
-                        <input type="text" name="model" class="form-control">
+                        <input type="text" name="model" class="form-control" th:value="${mashina.model}">
                     </div>
                 </div>
                 <div class="row mt-2">
@@ -30,7 +31,7 @@
                 </div>
                 <div class="row mt-2">
                     <div class="col-12">
-                        <input type="text" name="price" class="form-control">
+                        <input type="text" name="price" class="form-control" th:value="${mashina.price}">
                     </div>
                 </div>
                 <div class="row mt-2">
@@ -40,7 +41,7 @@
                 </div>
                 <div class="row mt-2">
                     <div class="col-12">
-                        <input type="text" name="engine" class="form-control">
+                        <input type="text" name="engine" class="form-control" th:value="${mashina.engine}">
                     </div>
                 </div>
                 <div class="row mt-2">
@@ -50,7 +51,7 @@
                 </div>
                 <div class="row mt-2">
                     <div class="col-12">
-                        <input type="text" name="color" class="form-control">
+                        <input type="text" name="color" class="form-control" th:value="${mashina.color}">
                     </div>
                 </div>
                 <div class="row mt-2">
@@ -60,14 +61,19 @@
                 </div>
                 <div class="row mt-2">
                     <div class="col-12">
-                        <textarea rows="10" cols="50" name="description" class="form-control"></textarea>
+                        <textarea rows="10" cols="50" name="description" class="form-control" th:text="${mashina.description}"></textarea>
                     </div>
                 </div>
                 <div class="row mt-2">
                     <div class="col-12">
-                        <button class="btn btn-success btn-sm">ADD CAR</button>
+                        <button class="btn btn-success btn-sm">UPDATE CAR</button>
                     </div>
                 </div>
+            </form>
+
+            <form action="/delete-car" method="post" class="mt-2">
+                <input type="hidden" name="id" th:value="${mashina.id}">
+                <button class="btn btn-danger btn-sm">DELETE CAR</button>
             </form>
         </div>
     </div>
