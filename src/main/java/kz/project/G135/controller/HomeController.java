@@ -1,6 +1,7 @@
 package kz.project.G135.controller;
 
 
+import kz.project.G135.db.*;
 import kz.project.G135.db.DBManager;
 import kz.project.G135.model.Car;
 import org.springframework.stereotype.Controller;
@@ -15,13 +16,13 @@ public class HomeController {
 
     @GetMapping(value = "/")
     public String mainPage(Model model){
-        model.addAttribute("mashinu", DBManager.getCars());
+        model.addAttribute("mashinu", DBConnector.getAllCars());
         return "index";
     }
 
     @PostMapping(value = "/add-car")
     public String addCar(Car car){
-        DBManager.addCar(car);
+        DBConnector.addCar(car);
         return "redirect:/";
     }
 
@@ -32,19 +33,19 @@ public class HomeController {
 
     @GetMapping(value = "/details/{id}")
     public String showDetailsCar(Model model, @PathVariable long id){
-        model.addAttribute("mashina", DBManager.getCarById(id));
+        model.addAttribute("mashina", DBConnector.getCarById(id));
         return "details-page";
     }
 
     @PostMapping(value = "/update-car")
     public String updateCar(Car car){
-        DBManager.updateCar(car);
+        DBConnector.updateCar(car);
         return "redirect:/";
     }
 
     @PostMapping(value = "/delete-car")
     public String deleteCar(@RequestParam long id){
-        DBManager.deleteCar(id);
+        DBConnector.deleteCar(id);
         return "redirect:/";
     }
 
