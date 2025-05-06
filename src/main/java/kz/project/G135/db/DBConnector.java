@@ -1,6 +1,7 @@
 package kz.project.G135.db;
 
 import kz.project.G135.model.Car;
+import kz.project.G135.model.City;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
@@ -32,7 +33,10 @@ public class DBConnector {
         List<Car> cars = new ArrayList<>();
 
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM cars ORDER BY id ASC");
+            PreparedStatement statement = connection.prepareStatement("SELECT * " +
+                    "FROM cars c " +
+                    "INNER JOIN cities ci " +
+                    "ON c.city_id = ci.id ORDER BY c.id ASC");
 
             ResultSet resultSet = statement.executeQuery(); //Только когда тянем данные с таблицы
 
@@ -44,6 +48,14 @@ public class DBConnector {
                 car.setModel(resultSet.getString("model"));
                 car.setEngine(resultSet.getDouble("engine"));
                 car.setDescription(resultSet.getString("description"));
+
+                City city = new City();
+                city.setId(resultSet.getLong("city_id"));
+                city.setCityName(resultSet.getString("city_name"));
+                city.setCode(resultSet.getString("code"));
+                city.setTicker(resultSet.getString("ticker"));
+
+                car.setCity(city);
 
                 cars.add(car);
             }
@@ -62,13 +74,14 @@ public class DBConnector {
         try {
 
             PreparedStatement statement = connection.prepareStatement("INSERT INTO cars " +
-                    "(model, price, engine, color, description) VALUES (?, ?, ?, ?, ?)");
+                    "(model, price, engine, color, city_id, description) VALUES (?, ?, ?, ?, ?, ?)");
 
             statement.setString(1, car.getModel());
             statement.setDouble(2, car.getPrice());
             statement.setDouble(3, car.getEngine());
             statement.setString(4, car.getColor());
-            statement.setString(5, car.getDescription());
+            statement.setLong(5, car.getCity().getId());
+            statement.setString(6, car.getDescription());
 
             statement.executeUpdate();
             statement.close();
@@ -83,7 +96,10 @@ public class DBConnector {
 
         try {
 
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM cars WHERE id=?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * " +
+                    "FROM cars c " +
+                    "INNER JOIN cities ci " +
+                    "ON c.city_id = ci.id WHERE c.id=?");
             statement.setLong(1, id);
 
             ResultSet resultSet = statement.executeQuery();
@@ -95,6 +111,14 @@ public class DBConnector {
                 car.setModel(resultSet.getString("model"));
                 car.setEngine(resultSet.getDouble("engine"));
                 car.setDescription(resultSet.getString("description"));
+
+                City city = new City();
+                city.setId(resultSet.getLong("city_id"));
+                city.setCode(resultSet.getString("code"));
+                city.setTicker(resultSet.getString("ticker"));
+                city.setCityName(resultSet.getString("city_name"));
+
+                car.setCity(city);
             }
 
             statement.close();
@@ -111,14 +135,15 @@ public class DBConnector {
         try {
 
             PreparedStatement statement = connection.prepareStatement("UPDATE cars " +
-                    "SET color=?, description=?, price=?, model=?, engine=? WHERE id=?");
+                    "SET color=?, description=?, price=?, model=?, engine=?, city_id=? WHERE id=?");
 
             statement.setString(1, car.getColor());
             statement.setString(2, car.getDescription());
             statement.setDouble(3, car.getPrice());
             statement.setString(4, car.getModel());
             statement.setDouble(5, car.getEngine());
-            statement.setLong(6, car.getId());
+            statement.setLong(6, car.getCity().getId());
+            statement.setLong(7, car.getId());
 
             statement.executeUpdate();
             statement.close();
@@ -144,6 +169,31 @@ public class DBConnector {
         }
     }
 
+    public static List<City> getAllCity() {
+        List<City> cities = new ArrayList<>();
+
+        try {
+
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM cities");
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()){
+                City city = new City();
+                city.setId(resultSet.getLong("id"));
+                city.setCityName(resultSet.getString("city_name"));
+                city.setTicker(resultSet.getString("ticker"));
+                city.setCode(resultSet.getString("code"));
+
+                cities.add(city);
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return  cities;
+    }
 }
 
 

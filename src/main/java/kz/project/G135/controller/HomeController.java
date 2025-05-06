@@ -2,7 +2,6 @@ package kz.project.G135.controller;
 
 
 import kz.project.G135.db.*;
-import kz.project.G135.db.DBManager;
 import kz.project.G135.model.Car;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,13 +26,15 @@ public class HomeController {
     }
 
     @GetMapping(value = "/add-car")
-    public String addCarPage(){
+    public String addCarPage(Model model){
+        model.addAttribute("cities", DBConnector.getAllCity());
         return "add-car";
     }
 
     @GetMapping(value = "/details/{id}")
     public String showDetailsCar(Model model, @PathVariable long id){
         model.addAttribute("mashina", DBConnector.getCarById(id));
+        model.addAttribute("cities", DBConnector.getAllCity());
         return "details-page";
     }
 

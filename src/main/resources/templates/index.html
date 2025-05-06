@@ -17,6 +17,7 @@
             <th>ENGINE</th>
             <th>COLOR</th>
             <th>DESCRIPTION</th>
+            <th>CITY</th>
             <th style="width: 8%;">DETAILS</th>
         </tr>
         </thead>
@@ -28,6 +29,7 @@
             <td th:text="${m.engine}"></td>
             <td th:text="${m.color}"></td>
             <td th:text="${m.description}"></td>
+            <td th:text="${m.city.cityName + '/' + m.city.code}"></td>
             <td><a th:href="@{'/details/' + ${m.id}}" class="btn btn-primary btn-sm">DETAILS</a></td>
         </tr>
         </tbody>

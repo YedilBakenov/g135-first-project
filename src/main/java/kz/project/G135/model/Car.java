@@ -15,6 +15,6 @@ public class Car {
    private double engine;
    private String color;
    private String description;
-
+   private City city;
 
 }
